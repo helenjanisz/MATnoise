@@ -21,6 +21,8 @@ input_directory = f"{PROJECTdir}/{PROJECTname}/"
 output_directory = f"{PROJECTdir}/{PROJECTname}/{SACdaydir}/"
 os.makedirs(output_directory, exist_ok=True)  # Create directory if it doesn't exist
 
+# this is a test
+
 # LOAD CLIENT
 client = Client(webservice)
 print(client)
