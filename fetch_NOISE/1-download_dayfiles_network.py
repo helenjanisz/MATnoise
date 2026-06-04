@@ -38,7 +38,7 @@ sr_new = 50 # Hz New sample rate
 trlen = 24*60*60 # s
 # WARNING! List the full channel names. Do not use wildcards. Bad things will happen...
 comps = ['HHZ','HH1','HH2','HHN','HHE'] #["HXZ", "HX1", "HX2"] #["LHZ", "LH1", "LH2"] #["HHZ", "HH1", "HH2"] #["HHZ", "HH1", "HH2", "BDH"]
-homedir = "/Users/noah/AACES Data 09-10:2018" # "./"
+homedir = "/Users/noah/AACES_Data_09_10_2018" # "./"
 # homedir = "TESTDIR/" # "./"
 is_removeresp = 1 # Remove response?
 outunits = 'DISP' # DISP, VEL, ACC [For pressure channels, should use "VEL"]
