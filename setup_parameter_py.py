@@ -12,7 +12,7 @@ SACdaydir = 'SAC_days' # where downloaded daily SAC files will be saved
 SACevtdir = 'SAC_evts' # where downloaded event SAC files will be saved
 
 # NETWORKS, DAYS, STATIONS
-networks = ["7D", "ZA"] # list of networks
+networks = ["XO"] # list of networks
 # station, day, and event file suffixes - these files should already exist in the PROJECTname folder before running
 stasuff = 'stations' # suffix designator for station list file (should be [NETWORK]_stasuff.txt)
 daysuff = 'days' # suffix designator for day list file, created ahead of running
