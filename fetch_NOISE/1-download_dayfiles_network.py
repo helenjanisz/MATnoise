@@ -46,7 +46,7 @@ is_overwrite = 0 # overwrite ?
 
 input_stalist = 1 # 0 if use all stations
 if input_stalist: # List of stations
-    stalist = '/Users/noah/Github/MATnoise/AACES_stations_good_TEST.txt'
+    stalist = '/Users/noah/Github/MATnoise/AACES_stations_good.txt'
     # stalist = 'AACES_stations_good.txt'
     text_file = open(stalist, "r")
     stations = text_file.read().split('\n')
