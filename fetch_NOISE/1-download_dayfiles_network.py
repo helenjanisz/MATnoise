@@ -38,7 +38,7 @@ sr_new = 50 # Hz New sample rate
 trlen = 24*60*60 # s
 # WARNING! List the full channel names. Do not use wildcards. Bad things will happen...
 comps = ['HHZ','HH1','HH2','HHN','HHE'] #["HXZ", "HX1", "HX2"] #["LHZ", "LH1", "LH2"] #["HHZ", "HH1", "HH2"] #["HHZ", "HH1", "HH2", "BDH"]
-homedir = "/Users/noah/AACES_Data_09_10_2018" # "./"
+homedir = "/Users/noah/AACES_Data_09_10_2018/" # "./"
 # homedir = "TESTDIR/" # "./"
 is_removeresp = 1 # Remove response?
 outunits = 'DISP' # DISP, VEL, ACC [For pressure channels, should use "VEL"]
@@ -104,7 +104,10 @@ for inet in range(0,len(inventory)):
         if not end_date: # no end date
             end_date = UTCDateTime(pd.Timestamp('today'))
         dayvec = pd.date_range(start=start_date.datetime, end=end_date.datetime, freq=str(trlen)+'S')
-        
+
+        # adjust dayvec to be within t1 and t2 
+        dayvec = dayvec[(dayvec >= t1.datetime) & (dayvec <= t2.datetime)]
+
         print('======== Working on STA : ' + station + "========")
         stadir = datadir + station + '/'
         if not os.path.exists(stadir):
