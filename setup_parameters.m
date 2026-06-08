@@ -28,9 +28,9 @@ parameters.min_width = 0.18;
 parameters.max_width = 0.30;
 
 %%% --- Parameters for initial processing --- %%%
-parameters.dt = 1; % sample rate
-parameters.comp = 'BH'; % component
-parameters.mindist = 20; % min. distance in kilometers
+parameters.dt = 50; % sample rate
+parameters.comp = 'HH'; % component
+parameters.mindist = 1; % min. distance in kilometers
 
 %%% --- Parameters for ccf_ambnoise --- %%%
 parameters.winlength = 3; %hours
