@@ -68,7 +68,7 @@ orientation_path = parameters.orientation_path;
 dt = parameters.dt;
 winlength = parameters.winlength;
 
-year = ''; %'2012';
+year = '2018'; %'2012';
 Nstart_sec = parameters.Nstart_sec; % (seconds) offset start of file
 Nstart = Nstart_sec/dt; % Number of samples
 comp = parameters.comp;
