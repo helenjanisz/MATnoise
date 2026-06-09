@@ -55,9 +55,9 @@ frange_prefilt = [1/100 1/10];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % % Setup parallel pool
-% Nworkers = 4; % number of workers in pool for parallel processing
+Nworkers = 4; % number of workers in pool for parallel processing
 delete(gcp('nocreate'));
-% parpool(Nworkers);
+ parpool(Nworkers);
 
 % input path
 datadir = parameters.datapath;
@@ -455,8 +455,8 @@ for ista1=1:nsta
             end
 			
 %             tic
-            % parfor iwin = 1:nwin
-            for iwin = 1:nwin
+             parfor iwin = 1:nwin
+            % for iwin = 1:nwin
 %				clear tcut S1R S2R S1T S2T S1Z S2Z fftS1R fftS2R fftS1T fftS2T fftS1Z fftS2Z
 
 				% cut in time
