@@ -9,7 +9,7 @@ addpath('./functions/calc_Rayleigh_disp/');
 %%% --- Paths to important files --- %%%
 parameters.workingdir = [pwd,'/'];
 
-parameters.datapath = ['/data/irma6/jrussel/YoungPacificORCA/SAC_1Hz/']; %'../nomelt_data_5sta/';
+parameters.datapath = ['/Users/noah/AACES_Data_09_10_2018/XO_Test/']; %'../nomelt_data_5sta/';
 
 parameters.PZpath = '../INSTRUMENT/'; % path to RESP files containing poles and zeros
 parameters.ccfpath = './ccf/';
