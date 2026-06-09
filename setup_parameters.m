@@ -11,8 +11,8 @@ parameters.workingdir = [pwd,'/'];
 
 parameters.datapath = ['/Users/noah/AACES_Data_09_10_2018/XO_Test/']; %'../nomelt_data_5sta/';
 
-parameters.PZpath = '../INSTRUMENT/'; % path to RESP files containing poles and zeros
-parameters.ccfpath = './ccf/';
+parameters.PZpath = '../Users/noah/AACES_Data_09_10_2018/Instrument_TEST/'; % path to RESP files containing poles and zeros
+parameters.ccfpath = './Users/noah/AACES_Data_09_10_2018/ccf_TEST';
 parameters.figpath = [parameters.workingdir,'figs/'];
 parameters.seis_path = [parameters.workingdir,'seismograms/'];
 parameters.orientation_path = './OBS_orientations.txt'; % Column 1: station name;   Column 2: H1 degrees CW from N
