@@ -249,11 +249,11 @@ for ista1=1:nsta
             test1H2 = dir([datadir,sta1,'/',file1cH2]);
             if isempty(test1Z) || isempty(test1H1) || isempty(test1H2)
                 %disp(['Missing data for ',sta1,' on day ... skipping'])
-                file1cH1 = strrep(file1cZ,[comp,'Z'],[comp,'N']);
-                file1cH2 = strrep(file1cZ,[comp,'Z'],[comp,'E']);
-                test1H1 = dir([datadir,sta1,'/',file1cH1]);
-                test1H2 = dir([datadir,sta1,'/',file1cH2]);
-                if isempty(test1H1) || isempty(test1H2)
+                file1cHN = strrep(file1cZ,[comp,'Z'],[comp,'N']);
+                file1cHE = strrep(file1cZ,[comp,'Z'],[comp,'E']);
+                test1H12 = dir([datadir,sta1,'/',file1cHN]);
+                test1H22 = dir([datadir,sta1,'/',file1cHE]);
+                if isempty(test1H12) || isempty(test1H22)
                     disp(['Missing data for ',sta1,' on day ... skipping'])
                 end
                 continue
@@ -267,9 +267,26 @@ for ista1=1:nsta
             str = strsplit(file1cZ,'.');
             hdayid = [str{2},'.',str{3},'.',str{4},'.',str{5},'.',str{6}];
             if isempty(file2cZ) || isempty(file2cH1) || isempty(file2cH2)
-                disp(['No data for ',sta2,' on day ',hdayid,'... skipping'])
+                %disp(['No data for ',sta2,' on day ',hdayid,'... skipping'])
+                    file2cHN = strrep(file1cZ,[comp,'Z'],[comp,'N']);
+                    file2cHE = strrep(file1cZ,[comp,'Z'],[comp,'E']);
+                    test2H1 = dir([datadir,sta1,'/',file2cHN]);
+                    test2H2 = dir([datadir,sta1,'/',file2cHE]);
+                    if isempty(test2H1) || isempty(test2H2)
+                        disp(['Missing data for ',sta2,' on day ... skipping'])
+                    end
                 continue
+                file2cH1=file2cHN;
+                file2cH2=file2cHE;
+                disp(['Converting N and E to 1 and 2 for station ',sta2,' on day ',hdayid])
             end
+
+            if isempty(test1H1) || isempty(test1H2)
+                file1cH1=file1cHN;
+                file1cH2=file1cHE;
+                disp(['Converting N and E to 1 and 2 for station ',sta1,' on day ',hdayid])
+            end
+
             file2cZ = file2cZ.name;
             file2cH1 = file2cH1.name;
             file2cH2 = file2cH2.name;
