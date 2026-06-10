@@ -252,46 +252,56 @@ for ista1=1:nsta
                     %disp(['Missing data for ',sta1,' on day ... skipping'])
                     file1cHN = strrep(file1cZ,[comp,'Z'],[comp,'N']);
                     file1cHE = strrep(file1cZ,[comp,'Z'],[comp,'E']);
-                    test1HN = dir([datadir,sta1,'/',file1cHN]);
-                    test1HE = dir([datadir,sta1,'/',file1cHE]);
                     file1cH1=file1cHN;
                     file1cH2=file1cHE;
                     disp(['Converting N and E to 1 and 2 for station ',sta1,])
                    
-                   V=9
                 end
                 
 
             % Check that day file exists for station 2
             Nchar = length(sta1);
-            file2cZ = dir([datadir,sta2,'/',sta2,file1cZ(Nchar+1:end)]);
-            file2cH1 = dir([datadir,sta2,'/',sta2,file1cH1(Nchar+1:end)]);
-            file2cH2 = dir([datadir,sta2,'/',sta2,file1cH2(Nchar+1:end)]);
+            file2cZ=strrep(file1cZ,sta1,sta2);
+            file2cH1=strrep(file1cZ,[comp,'Z'],[comp,'1']);
+            file2cH2=strrep(file1cZ,[comp,'Z'],[comp,'2']);
+            test2Z = dir([datadir,sta1,'/',file2cZ]);
+            test2H1 = dir([datadir,sta1,'/',file2cH1]);
+            test2H2 = dir([datadir,sta1,'/',file2cH2]);
+            %file2cZ = dir([datadir,sta2,'/',sta2,file1cZ(Nchar+1:end)]);
+            %file2cH1 = dir([datadir,sta2,'/',sta2,file1cH1(Nchar+1:end)]);
+            %file2cH2 = dir([datadir,sta2,'/',sta2,file1cH2(Nchar+1:end)]);
             str = strsplit(file1cZ,'.');
             hdayid = [str{2},'.',str{3},'.',str{4},'.',str{5},'.',str{6}];
-            if isempty(file2cZ) || isempty(file2cH1) || isempty(file2cH2)
+            if isempty(test2Z) || isempty(test2H1) || isempty(test2H2)
                 % Find the name of the Z file for station 2, then check for N and E
-                    file2cZ = file2cZ.name;
-                
-                    %file2cZ = file2cZ.name; % Need some way to represent this as a string name like in sta1
+                    
                     file2cHN = strrep(file2cZ,[comp,'Z'],[comp,'N']);
                     file2cHE = strrep(file2cZ,[comp,'Z'],[comp,'E']);
                     test2H1 = dir([datadir,sta2,'/',file2cHN]);
                     test2H2 = dir([datadir,sta2,'/',file2cHE]);
                     if isempty(test2H1) || isempty(test2H2)
                         disp(['Missing data for ',sta2,' on day ... skipping'])
+                        continue
                     end
-                continue
+                
                 file2cH1=file2cHN;
                 file2cH2=file2cHE;
                 disp(['Converting N and E to 1 and 2 for station ',sta2,' on day ',hdayid])
                 
             end
 
+                % Checking if data exists for station 1
+                test1H1 = dir([datadir,sta1,'/',file1cH1]);
+                test1H2 = dir([datadir,sta1,'/',file1cH2]);
+                if isempty(test1Z) || isempty(test1H1) || isempty(test1H2)
+                    disp(['Missing data for ',sta1,' on day ... skipping'])
+                    continue
 
-            file2cZ = file2cZ.name;
-            file2cH1 = file2cH1.name;
-            file2cH2 = file2cH2.name;
+                end
+
+            %file2cZ = file2cZ.name;
+            %file2cH1 = file2cH1.name;
+            %file2cH2 = file2cH2.name;
 
             if month_counter == 0
                 coh_sumR_month = 0;
@@ -315,18 +325,21 @@ for ista1=1:nsta
             data2cH2=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'2.sac']);
             data2cZ= dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'Z.sac']);
 
-            if isempty(data1cH1) || isempty(data1cH2) || isempty(data1cZ) || isempty(data2cH1) || isempty(data2cH2) || isempty(data2cZ)
-                
+            if isempty(data1cH1) || isempty(data1cH2)
                 data1cH1=dir([datadir,sta1,'/',sta1,'.',hdayid,'.',comp,'N.sac']);
                 data1cH2=dir([datadir,sta1,'/',sta1,'.',hdayid,'.',comp,'E.sac']);
+            end
+
+            if isempty(data2cH2) || isempty(data2cH1)
                 data2cH1=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'N.sac']);
                 data2cH2=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'E.sac']);
-
-                if isempty(data1cH1) || isempty(data1cH2) || isempty(data1cZ) || isempty(data2cH1) || isempty(data2cH2) || isempty(data2cZ)
-                    disp(['Missing data for ',sta1,' or ',sta2,' on day ... skipping'])
-                    continue
-                end
             end
+
+            if isempty(data1cH1) || isempty(data1cH2) || isempty(data1cZ) || isempty(data2cH1) || isempty(data2cH2) || isempty(data2cZ)
+                 disp(['Missing data for ',sta1,' or ',sta2,' on day ... skipping'])
+                continue
+            end
+        
 
           %  data1cH1=dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'1.sac']);
           %  data1cH2=dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'2.sac']);
