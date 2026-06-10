@@ -248,7 +248,14 @@ for ista1=1:nsta
             test1H1 = dir([datadir,sta1,'/',file1cH1]);
             test1H2 = dir([datadir,sta1,'/',file1cH2]);
             if isempty(test1Z) || isempty(test1H1) || isempty(test1H2)
-                disp(['Missing data for ',sta1,' on day ... skipping'])
+                %disp(['Missing data for ',sta1,' on day ... skipping'])
+                file1cH1 = strrep(file1cZ,[comp,'Z'],[comp,'N']);
+                file1cH2 = strrep(file1cZ,[comp,'Z'],[comp,'E']);
+                test1H1 = dir([datadir,sta1,'/',file1cH1]);
+                test1H2 = dir([datadir,sta1,'/',file1cH2]);
+                if isempty(test1H1) || isempty(test1H2)
+                    disp(['Missing data for ',sta1,' on day ... skipping'])
+                end
                 continue
             end
 
@@ -288,6 +295,19 @@ for ista1=1:nsta
             data2cH1=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'1.sac']);
             data2cH2=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'2.sac']);
             data2cZ= dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'Z.sac']);
+
+            if isempty(data1cH1) || isempty(data1cH2) || isempty(data1cZ) || isempty(data2cH1) || isempty(data2cH2) || isempty(data2cZ)
+                
+                data1cH1=dir([datadir,sta1,'/',sta1,'.',hdayid,'.',comp,'N.sac']);
+                data1cH2=dir([datadir,sta1,'/',sta1,'.',hdayid,'.',comp,'E.sac']);
+                data2cH1=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'N.sac']);
+                data2cH2=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'E.sac']);
+
+                if isempty(data1cH1) || isempty(data1cH2) || isempty(data1cZ) || isempty(data2cH1) || isempty(data2cH2) || isempty(data2cZ)
+                    disp(['Missing data for ',sta1,' or ',sta2,' on day ... skipping'])
+                    continue
+                end
+            end
 
           %  data1cH1=dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'1.sac']);
           %  data1cH2=dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'2.sac']);
