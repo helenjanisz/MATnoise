@@ -24,7 +24,7 @@ clear;
 setup_parameters;
 
 IsFigure1 = 1;
-IsFigure2 = 1;
+IsFigure2 = 0;
 
 % OUTPUT SETTINGS
 IsOutputFullstack = 1; % Save full year ccf stacks
