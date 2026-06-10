@@ -28,10 +28,10 @@ IsFigure2 = 1;
 
 % OUTPUT SETTINGS
 IsOutputFullstack = 1; % Save full year ccf stacks
-IsOutputMonthstack = 1; % save month ccf stacks
-IsOutputDaystack = 1; % save day ccf stacks
-IsOutputSinglestack = 1; % save single ccf before stacking
-IsOutputSeismograms = 1; % save raw seismograms before cross-correlating
+IsOutputMonthstack = 0; % save month ccf stacks
+IsOutputDaystack = 0; % save day ccf stacks
+IsOutputSinglestack = 0; % save single ccf before stacking
+IsOutputSeismograms = 0; % save raw seismograms before cross-correlating
 
 % GENERAL PROCESSING
 IsRemoveIR = 0; % remove instrument response
