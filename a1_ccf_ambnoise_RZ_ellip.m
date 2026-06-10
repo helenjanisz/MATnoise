@@ -198,7 +198,7 @@ for ista1=1:nsta
         mkdir([seisH2_path,sta1]);
     end
 
-    list1 = dir([datadir,sta1,'/*',comp,'Z.sac']);
+     list1= dir([datadir,sta1,'/*',comp,'Z.sac']);
 
     for ista2=1:nsta
         clear lat1 lat2 lon1 lon2 dist az baz vec_tz2 Z2raw vec_tz Z1raw
@@ -210,6 +210,7 @@ for ista1=1:nsta
             continue
         end
 
+        list2= dir([datadir,sta2,'/*',comp,'Z.sac']);
 
         % check to see if we've already done this ccf
         if(exist([ccfR_path,sta1,'/',sta1,'_',sta2,'_f.mat']))
@@ -267,9 +268,10 @@ for ista1=1:nsta
             str = strsplit(file1cZ,'.');
             hdayid = [str{2},'.',str{3},'.',str{4},'.',str{5},'.',str{6}];
             if isempty(file2cZ) || isempty(file2cH1) || isempty(file2cH2)
-                %disp(['No data for ',sta2,' on day ',hdayid,'... skipping'])
-                    file2cHN = strrep(file1cZ,[comp,'Z'],[comp,'N']);
-                    file2cHE = strrep(file1cZ,[comp,'Z'],[comp,'E']);
+                
+                    file2cZ = file2cZ.name; % Need some way to represent this as a string name like in sta1
+                    file2cHN = strrep(file2cZ,[comp,'Z'],[comp,'N']);
+                    file2cHE = strrep(file2cZ,[comp,'Z'],[comp,'E']);
                     test2H1 = dir([datadir,sta1,'/',file2cHN]);
                     test2H2 = dir([datadir,sta1,'/',file2cHE]);
                     if isempty(test2H1) || isempty(test2H2)
@@ -279,6 +281,8 @@ for ista1=1:nsta
                 file2cH1=file2cHN;
                 file2cH2=file2cHE;
                 disp(['Converting N and E to 1 and 2 for station ',sta2,' on day ',hdayid])
+                str = strsplit(file1cZ,'.');
+            hdayid = [str{2},'.',str{3},'.',str{4},'.',str{5},'.',str{6}];
             end
 
             if isempty(test1H1) || isempty(test1H2)
