@@ -248,17 +248,19 @@ for ista1=1:nsta
             test1Z = dir([datadir,sta1,'/',file1cZ]);
             test1H1 = dir([datadir,sta1,'/',file1cH1]);
             test1H2 = dir([datadir,sta1,'/',file1cH2]);
-            if isempty(test1Z) || isempty(test1H1) || isempty(test1H2)
-                %disp(['Missing data for ',sta1,' on day ... skipping'])
-                file1cHN = strrep(file1cZ,[comp,'Z'],[comp,'N']);
-                file1cHE = strrep(file1cZ,[comp,'Z'],[comp,'E']);
-                test1H12 = dir([datadir,sta1,'/',file1cHN]);
-                test1H22 = dir([datadir,sta1,'/',file1cHE]);
-                if isempty(test1H12) || isempty(test1H22)
-                    disp(['Missing data for ',sta1,' on day ... skipping'])
+                if isempty(test1Z) || isempty(test1H1) || isempty(test1H2)
+                    %disp(['Missing data for ',sta1,' on day ... skipping'])
+                    file1cHN = strrep(file1cZ,[comp,'Z'],[comp,'N']);
+                    file1cHE = strrep(file1cZ,[comp,'Z'],[comp,'E']);
+                    test1HN = dir([datadir,sta1,'/',file1cHN]);
+                    test1HE = dir([datadir,sta1,'/',file1cHE]);
+                    file1cH1=file1cHN;
+                    file1cH2=file1cHE;
+                    disp(['Converting N and E to 1 and 2 for station ',sta1,])
+                   
+                   V=9
                 end
-                continue
-            end
+                
 
             % Check that day file exists for station 2
             Nchar = length(sta1);
@@ -268,12 +270,14 @@ for ista1=1:nsta
             str = strsplit(file1cZ,'.');
             hdayid = [str{2},'.',str{3},'.',str{4},'.',str{5},'.',str{6}];
             if isempty(file2cZ) || isempty(file2cH1) || isempty(file2cH2)
+                % Find the name of the Z file for station 2, then check for N and E
+                    file2cZ = file2cZ.name;
                 
-                    file2cZ = file2cZ.name; % Need some way to represent this as a string name like in sta1
+                    %file2cZ = file2cZ.name; % Need some way to represent this as a string name like in sta1
                     file2cHN = strrep(file2cZ,[comp,'Z'],[comp,'N']);
                     file2cHE = strrep(file2cZ,[comp,'Z'],[comp,'E']);
-                    test2H1 = dir([datadir,sta1,'/',file2cHN]);
-                    test2H2 = dir([datadir,sta1,'/',file2cHE]);
+                    test2H1 = dir([datadir,sta2,'/',file2cHN]);
+                    test2H2 = dir([datadir,sta2,'/',file2cHE]);
                     if isempty(test2H1) || isempty(test2H2)
                         disp(['Missing data for ',sta2,' on day ... skipping'])
                     end
@@ -281,15 +285,9 @@ for ista1=1:nsta
                 file2cH1=file2cHN;
                 file2cH2=file2cHE;
                 disp(['Converting N and E to 1 and 2 for station ',sta2,' on day ',hdayid])
-                str = strsplit(file1cZ,'.');
-            hdayid = [str{2},'.',str{3},'.',str{4},'.',str{5},'.',str{6}];
+                
             end
 
-            if isempty(test1H1) || isempty(test1H2)
-                file1cH1=file1cHN;
-                file1cH2=file1cHE;
-                disp(['Converting N and E to 1 and 2 for station ',sta1,' on day ',hdayid])
-            end
 
             file2cZ = file2cZ.name;
             file2cH1 = file2cH1.name;
