@@ -23,7 +23,7 @@
 clear;
 setup_parameters;
 
-IsFigure1 = 1;
+IsFigure1 = 0;
 IsFigure2 = 0;
 
 % OUTPUT SETTINGS
