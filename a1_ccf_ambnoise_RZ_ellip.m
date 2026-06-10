@@ -28,10 +28,10 @@ IsFigure2 = 1;
 
 % OUTPUT SETTINGS
 IsOutputFullstack = 1; % Save full year ccf stacks
-IsOutputMonthstack = 0; % save month ccf stacks
-IsOutputDaystack = 0; % save day ccf stacks
-IsOutputSinglestack = 0; % save single ccf before stacking
-IsOutputSeismograms = 0; % save raw seismograms before cross-correlating
+IsOutputMonthstack = 1; % save month ccf stacks
+IsOutputDaystack = 1; % save day ccf stacks
+IsOutputSinglestack = 1; % save single ccf before stacking
+IsOutputSeismograms = 1; % save raw seismograms before cross-correlating
 
 % GENERAL PROCESSING
 IsRemoveIR = 0; % remove instrument response
@@ -68,7 +68,7 @@ orientation_path = parameters.orientation_path;
 dt = parameters.dt;
 winlength = parameters.winlength;
 
-year = '2018'; %'2012';
+year = ''; %'2012';
 Nstart_sec = parameters.Nstart_sec; % (seconds) offset start of file
 Nstart = Nstart_sec/dt; % Number of samples
 comp = parameters.comp;
@@ -282,19 +282,36 @@ for ista1=1:nsta
 
             disp(['Looking at ',hdayid,' ',sta2]);
 
-            data1cH1=dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'1.sac']);
-            data1cH2=dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'2.sac']);
-            data1cZ= dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'Z.sac']);
-            data2cH1=dir([datadir,sta2,'/',year,'/',sta2,'.',hdayid,'.',comp,'1.sac']);
-            data2cH2=dir([datadir,sta2,'/',year,'/',sta2,'.',hdayid,'.',comp,'2.sac']);
-            data2cZ= dir([datadir,sta2,'/',year,'/',sta2,'.',hdayid,'.',comp,'Z.sac']);
+            data1cH1=dir([datadir,sta1,'/',sta1,'.',hdayid,'.',comp,'1.sac']);
+            data1cH2=dir([datadir,sta1,'/',sta1,'.',hdayid,'.',comp,'2.sac']);
+            data1cZ= dir([datadir,sta1,'/',sta1,'.',hdayid,'.',comp,'Z.sac']);
+            data2cH1=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'1.sac']);
+            data2cH2=dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'2.sac']);
+            data2cZ= dir([datadir,sta2,'/',sta2,'.',hdayid,'.',comp,'Z.sac']);
 
-            data1cH1 = [datadir,sta1,'/',year,'/',data1cH1.name];
-            data1cH2 = [datadir,sta1,'/',year,'/',data1cH2.name];
-            data1cZ =  [datadir,sta1,'/',year,'/',data1cZ.name];
-            data2cH1 = [datadir,sta2,'/',year,'/',data2cH1.name];
-            data2cH2 = [datadir,sta2,'/',year,'/',data2cH2.name];
-            data2cZ =  [datadir,sta2,'/',year,'/',data2cZ.name];
+          %  data1cH1=dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'1.sac']);
+          %  data1cH2=dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'2.sac']);
+          %  data1cZ= dir([datadir,sta1,'/',year,'/',sta1,'.',hdayid,'.',comp,'Z.sac']);
+          %  data2cH1=dir([datadir,sta2,'/',year,'/',sta2,'.',hdayid,'.',comp,'1.sac']);
+          %  data2cH2=dir([datadir,sta2,'/',year,'/',sta2,'.',hdayid,'.',comp,'2.sac']);
+          %  data2cZ= dir([datadir,sta2,'/',year,'/',sta2,'.',hdayid,'.',comp,'Z.sac']);
+
+          
+            data1cH1 = [datadir,sta1,'/',data1cH1.name];
+            data1cH2 = [datadir,sta1,'/',data1cH2.name];
+            data1cZ =  [datadir,sta1,'/',data1cZ.name];
+            data2cH1 = [datadir,sta2,'/',data2cH1.name];
+            data2cH2 = [datadir,sta2,'/',data2cH2.name];
+            data2cZ =  [datadir,sta2,'/',data2cZ.name];
+
+          
+          
+           % data1cH1 = [datadir,sta1,'/',year,'/',data1cH1.name];
+           % data1cH2 = [datadir,sta1,'/',year,'/',data1cH2.name];
+           % data1cZ =  [datadir,sta1,'/',year,'/',data1cZ.name];
+           % data2cH1 = [datadir,sta2,'/',year,'/',data2cH1.name];
+           % data2cH2 = [datadir,sta2,'/',year,'/',data2cH2.name];
+           % data2cZ =  [datadir,sta2,'/',year,'/',data2cZ.name];
 
             %------------------- TEST IF DATA EXIST------------------------
             try
