@@ -262,8 +262,8 @@ for ista1=1:nsta
             % Check that day file exists for station 2
             Nchar = length(sta1);
             file2cZ=strrep(file1cZ,sta1,sta2);
-            file2cH1=strrep(file1cZ,[comp,'Z'],[comp,'1']);
-            file2cH2=strrep(file1cZ,[comp,'Z'],[comp,'2']);
+            file2cH1=strrep(file2cZ,[comp,'Z'],[comp,'1']);
+            file2cH2=strrep(file2cZ,[comp,'Z'],[comp,'2']);
             test2Z = dir([datadir,sta1,'/',file2cZ]);
             test2H1 = dir([datadir,sta1,'/',file2cH1]);
             test2H2 = dir([datadir,sta1,'/',file2cH2]);
