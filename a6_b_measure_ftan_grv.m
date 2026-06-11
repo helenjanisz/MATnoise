@@ -62,7 +62,7 @@ figpath = parameters.figpath;
 fig_winlength_path = [figpath,windir,'/fullStack/'];
 
 %------------ PATH INFORMATION -------------%
-ccf_path = './ccf/';
+ccf_path = parameters.ccfpath;
 %ccf_winlength_path = [ccf_path,'window',num2str(winlength),'hr/'];
     ccf_winlength_path = [ccf_path,windir,'/'];
 ccf_singlestack_path = [ccf_winlength_path,'single/'];
