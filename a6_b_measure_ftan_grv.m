@@ -20,7 +20,7 @@ isoutput = 1; % save output?
 %======================= PARAMETERS =======================%
 %comp = {'TT', 'RR', 'ZZ'}; %'ZZ'; %'RR'; %'TT';
 comp = {'ZZ'};
-windir = 'window3hr';
+windir = 'window3hr_ellip';
 % windir = 'window3hr_Zcorr_tiltcomp';
 % Group velocity min and max
 vmin = 0.5;
