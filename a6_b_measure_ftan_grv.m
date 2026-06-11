@@ -10,9 +10,9 @@
 % jbrussell - 9/2025
 clear all; close all;
 setup_parameters;
-IsFigure = 1;
-IsFigure_GAUS = 1; % Plot frequency domain filtered and unfiltered
-IsFigure_env = 1;
+IsFigure = 0;
+IsFigure_GAUS = 0; % Plot frequency domain filtered and unfiltered
+IsFigure_env = 0;
 
 isoverwrite = 1; % overwrite results?
 isoutput = 1; % save output?
