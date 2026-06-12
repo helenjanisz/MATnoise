@@ -12,8 +12,8 @@ isoutput = 1; % save output?
 
 %% Parameters from FTAN script
 windir = 'window3hr_ellip';
-frange_fit = [1/25 1/4]; % Frequency range to estimate grv
-opts.nBranches = 1; %    (default 2)     % # dispersion branches to pick
+frange_fit = [1/25 1/3]; % Frequency range to estimate grv
+opts.nBranches = 2; %    (default 2)     % # dispersion branches to pick
 
 %QC Parameters
 snr_thresh = 8; % minimum SNR to consider. If any component (ZZ,RR,ZR,RZ) is less than this value then measurement is dropped
@@ -127,10 +127,10 @@ for ista=1:nsta % loop over all stations
         disp(['No measurements for ',sta,'... skipping'])
         continue
     end
-
+    
     %% Do quality control
     I_QCpass = snr_vals >= snr_thresh & ...
-               wl_vals >= wl_thresh & ...
+               wl_vals >= wl_thresh(1) & ...
                (abs(dphi_vals)>=dphi_thresh(1) & abs(dphi_vals)<=dphi_thresh(2)) & ...
                abs(tg_difffromZZ_vals)./repmat(periods,size(tg_difffromZZ_vals,1),1) <= tg_period_frac_thresh & ...
                abs(hv_RZdiff_vals) <= hv_RZ_diff_thresh;
