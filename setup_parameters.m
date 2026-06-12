@@ -9,14 +9,14 @@ addpath('./functions/calc_Rayleigh_disp/');
 %%% --- Paths to important files --- %%%
 parameters.workingdir = [pwd,'/'];
 
-parameters.datapath = ['/Users/noah/AACES_Data_09_10_2018/XO_Test/']; %'../nomelt_data_5sta/';
+parameters.datapath = ['/Users/noah/AACES_Data_09_10_2018/XO_sps25/XO/']; %'../nomelt_data_5sta/';
 
 parameters.PZpath = '../Instrument/'; % path to RESP files containing poles and zeros
-parameters.ccfpath = '/Users/noah/AACES_Data_09_10_2018/ccf_TEST/';
+parameters.ccfpath = '/Users/noah/AACES_Data_09_10_2018/ccf_XO_sps25/';
 parameters.figpath = [parameters.workingdir,'figs/'];
 parameters.seis_path = [parameters.workingdir,'seismograms/'];
-parameters.orientation_path = '/Users/noah/Github/MATnoise/TEST_Orientations.txt'; % Column 1: station name;   Column 2: H1 degrees CW from N
-[stalist, stalat, stalon, staz] = textread(['/Users/noah/Github/MATnoise/TEST_stalist_good.txt'],'%s %f %f %f\n');
+parameters.orientation_path = '/Users/noah/Github/MATnoise/OBS_orientations.txt'; % Column 1: station name;   Column 2: H1 degrees CW from N
+[stalist, stalat, stalon, staz] = textread(['/Users/noah/Github/MATnoise/stalist_good12.txt'],'%s %f %f %f\n');
 parameters.stalist = stalist;
 parameters.stalat = stalat;
 parameters.stalon = stalon;
@@ -28,7 +28,7 @@ parameters.min_width = 0.18;
 parameters.max_width = 0.30;
 
 %%% --- Parameters for initial processing --- %%%
-parameters.dt = 50^(-1); % sample rate
+parameters.dt = 25^(-1); % sample rate
 parameters.comp = 'HH'; % component
 parameters.mindist = 1; % min. distance in kilometers
 
