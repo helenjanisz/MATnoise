@@ -18,14 +18,14 @@
 clear all; close all;
 setup_parameters;
 
-IsFigure = 1;
+IsFigure = 0;
 isoverwrite = 1; % overwrite results?
 isoutput = 1; % save output?
 
 %% Parameters from FTAN script
 windir = 'window3hr_ellip';
-frange_fit = [1/25 1/4]; % Frequency range to estimate grv
-opts.nBranches = 1; %    (default 2)     % # dispersion branches to pick
+frange_fit = [1/25 1/3]; % Frequency range to estimate grv
+opts.nBranches = 2; %    (default 2)     % # dispersion branches to pick
 
 % FTAN directory names (should not need to edit these)
 path2ftan_ZZ = ['./ftan/',windir,'/fullStack/ftanZZ/',num2str(1/frange_fit(2)),'_',num2str(1/frange_fit(1)),'s_br',num2str(opts.nBranches),'/'];
