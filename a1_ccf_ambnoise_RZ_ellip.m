@@ -227,6 +227,21 @@ for ista1=1:nsta
             continue
         end
 
+         % check to see if we've already done this ccf for other direction
+        if(exist([ccfR_path,sta2,'/',sta2,'_',sta1,'_f.mat']))
+            display('CCF already exist, skip this pair');
+            continue
+        elseif exist([ccfZ_path,sta2,'/',sta2,'_',sta1,'_f.mat'])
+            display('CCF already exist, skip this pair');
+            continue
+        elseif exist([ccfZR_path,sta2,'/',sta2,'_',sta1,'_f.mat'])
+            display('CCF already exist, skip this pair');
+            continue
+        elseif exist([ccfRZ_path,sta2,'/',sta2,'_',sta1,'_f.mat'])
+            display('CCF already exist, skip this pair');
+            continue
+        end
+
         display(['performing cross-correlation for staion pair : ',sta1,'  ', sta2]);
         % -------------loop through each half day--------------------
         nday_stack=0;
