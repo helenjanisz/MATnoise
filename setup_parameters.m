@@ -28,7 +28,7 @@ parameters.min_width = 0.18;
 parameters.max_width = 0.30;
 
 %%% --- Parameters for initial processing --- %%%
-parameters.dt = 25^(-1); % sample rate
+parameters.dt = 1/25; % sample rate
 parameters.comp = 'HH'; % component
 parameters.mindist = 1; % min. distance in kilometers
 
