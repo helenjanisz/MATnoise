@@ -10,16 +10,20 @@
 % jbrussell - 9/2025
 clear all; close all;
 setup_parameters;
-IsFigure = 0;
-IsFigure_GAUS = 0; % Plot frequency domain filtered and unfiltered
-IsFigure_env = 0;
+IsFigure = 1;
+IsFigure_GAUS = 1; % Plot frequency domain filtered and unfiltered
+IsFigure_env = 1; % Plot time domain filtered and unfiltered CCFs with envelopes
+IsFigure4=1; % Plot correlation coefficients between grv curves
+IsFigure3 = 1; % Plot grv curves on top of ccf envelopes
+% On/off toggle for figure pop up
+showfigures = 0;
 
 isoverwrite = 1; % overwrite results?
 isoutput = 1; % save output?
 
 %======================= PARAMETERS =======================%
 %comp = {'TT', 'RR', 'ZZ'}; %'ZZ'; %'RR'; %'TT';
-comp = {'ZZ'};
+comp = {'ZZ', 'RR', 'RZ', 'ZR'}; %'ZZ'; %'RR'; %'TT';
 windir = 'window3hr_ellip';
 % windir = 'window3hr_Zcorr_tiltcomp';
 % Group velocity min and max
@@ -87,6 +91,14 @@ end
 
 ccf_path = [ccf_stack_path,'ccf',comp{1},'/',];
 npairall = 0;
+
+% Figure Toggle
+if showfigures == 1
+    figopstr = {'Visible', 'on'};
+else
+    figopstr = {'Visible', 'off'};
+end
+
 %------------ LOAD DATA AND PLOT IN TIME DOMAIN -------------%
 for ista1=1:nsta % loop over all stations
     sta1=char(stalist(ista1,:));
@@ -143,10 +155,16 @@ for ista1=1:nsta % loop over all stations
         end
     
         % Plot the gaussian filters and an example of a filtered applied in the frequency domain
+        fig_gaus=[];
         if IsFigure_GAUS
+            fig_gaus = figure(figopstr{:}); % Create figure without displaying it    
+        end
 
-            figure(1); clf;
-            subplot(2,1,1);
+        if IsFigure_GAUS
+            fig_gaus = figure(figopstr{:}); % Create figure without displaying it 
+            %figure(1); 
+            clf;
+            subplot(2,1,1, 'Parent', fig_gaus);
             [xi yi] = ndgrid(faxis,1./periods);
             surface(xi,yi,gaus_filters);
             shading flat;
@@ -157,7 +175,7 @@ for ista1=1:nsta % loop over all stations
             set(gca,'linewidth',1.5,'fontsize',15);
             axis tight;
             
-            subplot(2,1,2); box on; hold on;
+            subplot(2,1,2, 'Parent', fig_gaus); box on; hold on;
             iper = 10;
             plot(faxis,abs(ccf),'-k','linewidth',3); hold on;
             plot(faxis,abs(ccf_gaus(:,iper)),'r','linewidth',2);
@@ -167,6 +185,12 @@ for ista1=1:nsta % loop over all stations
             legend({'Raw','Filtered'},'location','northeast');
             set(gca,'linewidth',1.5,'fontsize',15);
             axis tight
+
+            % Save and close figure
+            if isoutput
+                save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_gaussian_filters.pdf'],fig_gaus,300);
+            end
+            close(fig_gaus); % Close the figure
             
         end
         
@@ -179,10 +203,17 @@ for ista1=1:nsta % loop over all stations
         ccf_orig_ifft = fftshift(ccf_orig_ifft); % rearrange values as [-lag lag]
         
         % Plot some of the filtered CCFs just to check
+        fig_env = [];
         if IsFigure_env
-            f2 = figure(2); clf;
+            fig_env = figure(figopstr{:}); % Create figure without displaying it    
+        end
+
+        if IsFigure_env
+            figure(figopstr{:}); 
+            clf(fig_env);
             set(gcf,'position',[ 60    79   743   939]);
-            box on; hold on;
+            ax=axes('Parent', fig_env);
+            box (ax,'on'); hold (ax, 'on');
             time = ([0:N-1]-floor(N/2))*dt;  % build lagtime vector for plotting
             time = [time(time<0), time(time>=0)];
             N = size(ccf_gaus,1);
@@ -201,6 +232,8 @@ for ista1=1:nsta % loop over all stations
             title(['Gaussian filtered CCFs: ',sta1,'-',sta2]);
             xlabel('Lag Time (s)');
 %             ylabel('Normalized & Shifted Amplitudes');
+            save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_time_domain_ccf.pdf'],fig_env,300);
+            close(fig_env); % Close the figure
         end
         
         % Get time and group velocity axes
@@ -236,105 +269,131 @@ for ista1=1:nsta % loop over all stations
         [tg_stack, grv_stack, amp_stack, idx_tg_stack, meta_stack] = pick_ftan_ridges_robust(ccf_ifft_env_stack, time_pos, periods, r, vmin, vmax, opts);
         
         %% Calculate correlation coefficients for pos, neg, and stack
-        
-      %  figure(4); clf;
-      %  set(gcf,'position',[527          40        1065         420],'color','w');
-        corr_mat = {};
-        corr_avg = [];
-        for ibr = 1:opts.nBranches 
-            [R,P,RLO,RUP] = corrcoef([grv_pos(:,ibr),grv_neg(:,ibr),grv_stack(:,ibr)],'rows', 'complete');
-            corr_mat{ibr} = R;
-            corr_avg(ibr) = mean(unique(R(R<1)));
-            
-      %      subplot(1,opts.nBranches,ibr);
-      %      imagesc(R);
-      %      cb = colorbar;
-      %      ylabel(cb,'Correlation Coeff.');
-      %      set(cb,'linewidth',1.5);
-      %      caxis([0.7 1]);
-      %      set(gca,'fontsize',15,'linewidth',1.5,'YDir','reverse');
-      %      yticks([1 2 3]);
-      %      xticks([1 2 3]);
-      %      yticklabels({'+Lag';'-Lag';'Stack'})
-      %      xticklabels({'+Lag';'-Lag';'Stack'})
-      %      ylim([0.5 3.5]);
-      %      xlim([0.5 3.5]);
-      %      axis square;
-      %      title(['Branch: ',num2str(ibr),'   R_{av}=',num2str(corr_avg(ibr))]);
+
+        fig_4 = [];
+        if IsFigure4
+            fig_4 = figure(figopstr{:}); % Create figure without displaying it    
         end
-      %  sgtitle('Dispersion Curve Correlations','fontsize',16,'fontweight','bold');
-      %  if isoutput
-      %     save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_correlations.pdf'],4,300);
+
+        if IsFigure4
+            figure(figopstr{:}); clf;
+            set(gcf,'position',[527          40        1065         420],'color','w');
+            corr_mat = {};
+            corr_avg = [];
+            for ibr = 1:opts.nBranches 
+                [R,P,RLO,RUP] = corrcoef([grv_pos(:,ibr),grv_neg(:,ibr),grv_stack(:,ibr)],'rows', 'complete');
+                corr_mat{ibr} = R;
+                corr_avg(ibr) = mean(unique(R(R<1)));
+                
+                subplot(1,opts.nBranches,ibr, 'Parent', fig_4);
+                imagesc(R);
+                cb = colorbar;
+                ylabel(cb,'Correlation Coeff.');
+                set(cb,'linewidth',1.5);
+                caxis([0.7 1]);
+                set(gca,'fontsize',15,'linewidth',1.5,'YDir','reverse');
+                yticks([1 2 3]);
+                xticks([1 2 3]);
+                yticklabels({'+Lag';'-Lag';'Stack'})
+                xticklabels({'+Lag';'-Lag';'Stack'})
+                ylim([0.5 3.5]);
+                xlim([0.5 3.5]);
+                axis square;
+                title(['Branch: ',num2str(ibr),'   R_{av}=',num2str(corr_avg(ibr))]);
+            end
+            sgtitle('Dispersion Curve Correlations','fontsize',16,'fontweight','bold');
+            if isoutput
+            save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_correlations.pdf'],4,300);
+            
+            close(fig_4); % Close the figure
+            end
+        else
+            corr_mat = {};
+            corr_avg = [];
+            for ibr = 1:opts.nBranches 
+                [R,P,RLO,RUP] = corrcoef([grv_pos(:,ibr),grv_neg(:,ibr),grv_stack(:,ibr)],'rows', 'complete');
+                corr_mat{ibr} = R;
+                corr_avg(ibr) = mean(unique(R(R<1)));
+            end
+        end
+
+        fig_3 = [];
+       % if IsFigure3
+       %     fig_3 = figure(figopstr{:}); % Create figure without displaying it    
       %  end
-        
-        %% Plot group velocity measurements
-        
-    %    f3 = figure(3); clf; 
-    %    set(gcf, 'Color', 'w','position',[681         124        1055         420*2]);
-    %    cmap = parula;
-    %    colormap(cmap)
-    %    [PERIODS, GRV] = meshgrid(periods,grv_axis);
-        
-    %    clims = [-3 0];
-        
-        % CAUSAL (+LAG)
-    %    subplot(2,2,2); box on; hold on;
-    %    set(gca,'color',cmap(1,:))
-    %    levels = linspace(clims(1),clims(2),25);
-    %    contourf(PERIODS,GRV,log(ccf_ifft_env_pos./max(ccf_ifft_env_pos(:))),levels,'LineStyle','none'); shading flat;
-    %    plot(periods,grv_pos,'o-','color','r','linewidth',1.5);
-    %    cb = colorbar;
-    %    ylabel(cb,'Log(Amp.)');
-    %    set(cb,'linewidth',1.5);
-%   %      caxis([0 1]);
-    %    caxis(clims);
-    %    axis tight;
-    %    xlabel('Period (s)','fontsize',15);
-    %    ylabel('Group Velocity (km/s)','fontsize',15);
-    %    set(gca,'fontsize',15);
-    %    ylim([vmin,vmax]);
-    %    xlim([periods(1) periods(end)]);
-    %    title(['Causal ',sta1,'-',sta2,': ',num2str(r),'km']);
-        
-        % ACAUSAL (-LAG)
-    %    subplot(2,2,1); box on; hold on;
-    %    set(gca,'color',cmap(1,:))
-    %    contourf(PERIODS,GRV,log(ccf_ifft_env_neg./max(ccf_ifft_env_neg(:))),levels,'LineStyle','none'); shading flat;
-    %    plot(periods,grv_neg,'o-','color','r','linewidth',1.5);
-    %    cb = colorbar;
-    %    ylabel(cb,'Log(Amp.)');
-    %    set(cb,'linewidth',1.5);
-%   %      caxis([0 1]);
-    %    caxis(clims);
-    %    axis tight;
-    %    xlabel('Period (s)','fontsize',15);
-    %    ylabel('Group Velocity (km/s)','fontsize',15);
-    %    set(gca,'fontsize',15);
-    %    ylim([vmin,vmax]);
-    %    xlim([periods(1) periods(end)]);
-    %    title(['Acausal ',sta1,'-',sta2,': ',num2str(r),'km']);
-        
-        % STACKED (POS + NEG)
-    %    subplot(2,2,3); box on; hold on;
-    %    set(gca,'color',cmap(1,:))
-    %    contourf(PERIODS,GRV,log(ccf_ifft_env_stack./max(ccf_ifft_env_stack(:))),levels,'LineStyle','none'); shading flat;
-    %    plot(periods,grv_stack,'o-','color','r','linewidth',1.5);
-    %    cb = colorbar;
-    %    ylabel(cb,'Log(Amp.)');
-    %    set(cb,'linewidth',1.5);
-%   %      caxis([0 1]);
-    %    caxis(clims);
-    %    axis tight;
-    %    xlabel('Period (s)','fontsize',15);
-    %    ylabel('Group Velocity (km/s)','fontsize',15);
-    %    set(gca,'fontsize',15);
-    %    ylim([vmin,vmax]);
-    %    xlim([periods(1) periods(end)]);
-    %    title(['Stacked ',sta1,'-',sta2,': ',num2str(r),'km']);
-        
-    %    if isoutput
-    %        save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_grv_panels.pdf'],f3,300);
-    %    end
+
+        if IsFigure3
+            %% Plot group velocity measurements
+            
+            f3 = figure(figopstr{:}); clf; 
+            set(gcf, 'Color', 'w','position',[681         124        1055         420*2]);
+            cmap = parula;
+            colormap(cmap)
+            [PERIODS, GRV] = meshgrid(periods,grv_axis);
+            
+            clims = [-3 0];
+            
+            % CAUSAL (+LAG)
+            subplot(2,2,2, 'Parent', fig_3); box on; hold on;
+            set(gca,'color',cmap(1,:))
+            levels = linspace(clims(1),clims(2),25);
+            contourf(PERIODS,GRV,log(ccf_ifft_env_pos./max(ccf_ifft_env_pos(:))),levels,'LineStyle','none'); shading flat;
+            plot(periods,grv_pos,'o-','color','r','linewidth',1.5);
+            cb = colorbar;
+            ylabel(cb,'Log(Amp.)');
+            set(cb,'linewidth',1.5);
+    %         caxis([0 1]);
+            caxis(clims);
+            axis tight;
+            xlabel('Period (s)','fontsize',15);
+            ylabel('Group Velocity (km/s)','fontsize',15);
+            set(gca,'fontsize',15);
+            ylim([vmin,vmax]);
+            xlim([periods(1) periods(end)]);
+            title(['Causal ',sta1,'-',sta2,': ',num2str(r),'km']);
+            
+            % ACAUSAL (-LAG)
+            subplot(2,2,1, 'Parent', fig_3); box on; hold on;
+            set(gca,'color',cmap(1,:))
+            contourf(PERIODS,GRV,log(ccf_ifft_env_neg./max(ccf_ifft_env_neg(:))),levels,'LineStyle','none'); shading flat;
+            plot(periods,grv_neg,'o-','color','r','linewidth',1.5);
+            cb = colorbar;
+            ylabel(cb,'Log(Amp.)');
+            set(cb,'linewidth',1.5);
+    %         caxis([0 1]);
+            caxis(clims);
+            axis tight;
+            xlabel('Period (s)','fontsize',15);
+            ylabel('Group Velocity (km/s)','fontsize',15);
+            set(gca,'fontsize',15);
+            ylim([vmin,vmax]);
+            xlim([periods(1) periods(end)]);
+            title(['Acausal ',sta1,'-',sta2,': ',num2str(r),'km']);
+            
+            % STACKED (POS + NEG)
+            subplot(2,2,3, 'Parent', fig_3); box on; hold on;
+            set(gca,'color',cmap(1,:))
+            contourf(PERIODS,GRV,log(ccf_ifft_env_stack./max(ccf_ifft_env_stack(:))),levels,'LineStyle','none'); shading flat;
+            plot(periods,grv_stack,'o-','color','r','linewidth',1.5);
+            cb = colorbar;
+            ylabel(cb,'Log(Amp.)');
+            set(cb,'linewidth',1.5);
+    %         caxis([0 1]);
+            caxis(clims);
+            axis tight;
+            xlabel('Period (s)','fontsize',15);
+            ylabel('Group Velocity (km/s)','fontsize',15);
+            set(gca,'fontsize',15);
+            ylim([vmin,vmax]);
+            xlim([periods(1) periods(end)]);
+            title(['Stacked ',sta1,'-',sta2,': ',num2str(r),'km']);
+            
+            if isoutput
+                save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_grv_panels.pdf'],f3,300);
+            end
+            
+            close(fig_3); % Close the figure
+        end
         
         
         %% Save outputs
