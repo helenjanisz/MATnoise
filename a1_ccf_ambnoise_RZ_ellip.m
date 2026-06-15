@@ -23,7 +23,7 @@
 clear;
 setup_parameters;
 
-IsFigure1 = 0;
+IsFigure1 = 1;
 IsFigure2 = 0;
 
 % OUTPUT SETTINGS
@@ -55,9 +55,9 @@ frange_prefilt = [1/100 1/10];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % % Setup parallel pool
-Nworkers = 4; % number of workers in pool for parallel processing
-delete(gcp('nocreate'));
- parpool(Nworkers);
+% Nworkers = 4; % number of workers in pool for parallel processing
+% delete(gcp('nocreate'));
+%  parpool(Nworkers);
 
 % input path
 datadir = parameters.datapath;
