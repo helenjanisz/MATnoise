@@ -19,6 +19,8 @@ clear all; close all;
 setup_parameters;
 
 IsFigure = 0;
+% On/off toggle for figure pop up
+showfigures = 0;
 isoverwrite = 1; % overwrite results?
 isoutput = 1; % save output?
 
@@ -55,6 +57,12 @@ end
 hv_fig_path = ['./figs/',windir,'/fullStack/HV_ellip/',num2str(1/frange_fit(2)),'_',num2str(1/frange_fit(1)),'s_br',num2str(opts.nBranches),'/'];
 if ~exist(hv_fig_path)
     mkdir(hv_fig_path);
+end
+
+if showfigures == 1
+    figopstr = {'Visible', 'on'};
+else
+    figopstr = {'Visible', 'off'};
 end
 
 %% Loop over stations and calculate ellipticity
@@ -284,11 +292,15 @@ for ista1=1:nsta % loop over all stations
         end
         
         %% Plot station pair HV
+        fig_9998 = [];
         if IsFigure
-            figure(9998); clf;
+            fig_9998 = figure(figopstr{:}); % Create figure without displaying it    
+        end
+        if IsFigure
+            fig_9998=figure(figopstr{:}); clf;
             set(gcf,'position',[115   203   938   753],'color','w')
 
-            subplot(2,1,1);
+            subplot(2,1,1,'Parent', fig_9998);
             box on; hold on;
             h9999(1) = plot(periods,hv.sta1.RZ_ZZ_pos,'-ob','DisplayName',[sta1,' RZ/ZZ +']);
             plot(periods,hv.sta1.RZ_ZZ_neg,':ob','DisplayName',[sta1,' RZ/ZZ -']);
@@ -309,7 +321,7 @@ for ista1=1:nsta % loop over all stations
             legend('location','eastoutside')
             set(gca,'fontsize',15,'linewidth',1.5);
 
-            subplot(2,1,2);
+            subplot(2,1,2,'Parent', fig_9998);
             box on; hold on;
             h9999(1) = plot(periods,hv.sta1.dphi_RZ_ZZ_pos,'-ob','DisplayName',[sta1,' RZ/ZZ +']);
             plot(periods,hv.sta1.dphi_RZ_ZZ_neg,':ob','DisplayName',[sta1,' RZ/ZZ -']);
@@ -335,17 +347,23 @@ for ista1=1:nsta % loop over all stations
             set(gca,'fontsize',15,'linewidth',1.5);
 
             if isoutput
-                save2pdf([hv_fig_path,'/',sta1,'_',sta2,'_HVcurves.pdf'],9998,300);
+                save2pdf([hv_fig_path,'/',sta1,'_',sta2,'_HVcurves.pdf'],fig_9998,300);
             end
 
+            close(fig_9998); % Close the figure
+
+            fig_9999 = [];
+            if IsFigure
+                fig_9999 = figure(figopstr{:}); % Create figure without displaying it    
+            end
 
             %% Plot time domain
 
-            figure(9999); clf;
+            fig_9999=figure(figopstr{:}); clf;
             set(gcf,'position',[23   492   908   419],'color','w');
             iper = round(length(periods)/2);
 
-            subplot(2,4,[1 2]); box on; hold on;
+            subplot(2,4,[1 2], 'Parent', fig_9999); box on; hold on;
             plot(time,ftan_ZZ.stack.ccf(:,iper),'-r','linewidth',1.5);
             plot(time,-1*ftan_RZ.stack.ccf(:,iper),'-b','linewidth',1.5);
             legend({'ZZ';'RZ'})
@@ -354,7 +372,7 @@ for ista1=1:nsta % loop over all stations
             title([num2str(periods(iper)),' s'])
             set(gca,'linewidth',1.5,'fontsize',12)
 
-            subplot(2,4,[5 6]); box on; hold on;
+            subplot(2,4,[5 6], 'Parent', fig_9999); box on; hold on;
             plot(time,ftan_ZZ.stack.ccf(:,iper),'-r','linewidth',1.5);
             plot(time,ftan_ZR.stack.ccf(:,iper),'-b','linewidth',1.5);
             legend({'ZZ';'ZR'})
@@ -363,7 +381,7 @@ for ista1=1:nsta % loop over all stations
             title([num2str(periods(iper)),' s'])
             set(gca,'linewidth',1.5,'fontsize',12)
 
-            subplot(2,4,3); box on;
+            subplot(2,4,3, 'Parent', fig_9999); box on;
             plot(-1*ftan_RZ.stack.ccf(:,iper),ftan_ZZ.stack.ccf(:,iper),'-r','linewidth',1.5);
             xlabel('RZ');
             ylabel('ZZ');
@@ -372,7 +390,7 @@ for ista1=1:nsta % loop over all stations
             title([sta1])
             set(gca,'linewidth',1.5,'fontsize',12)
 
-            subplot(2,4,4); box on;
+            subplot(2,4,4, 'Parent', fig_9999); box on;
             plot(-1*ftan_RR.stack.ccf(:,iper),ftan_ZR.stack.ccf(:,iper),'-r','linewidth',1.5);
             xlabel('RR');
             ylabel('ZR');
@@ -381,7 +399,7 @@ for ista1=1:nsta % loop over all stations
             title([sta1])
             set(gca,'linewidth',1.5,'fontsize',12)
 
-            subplot(2,4,7); box on;
+            subplot(2,4,7, 'Parent', fig_9999); box on;
             plot(ftan_ZR.stack.ccf(:,iper),ftan_ZZ.stack.ccf(:,iper),'-r','linewidth',1.5);
             xlabel('ZR');
             ylabel('ZZ');
@@ -390,7 +408,7 @@ for ista1=1:nsta % loop over all stations
             title([sta2])
             set(gca,'linewidth',1.5,'fontsize',12)
 
-            subplot(2,4,8); box on;
+            subplot(2,4,8, 'Parent', fig_9999); box on;
             plot(ftan_RR.stack.ccf(:,iper),ftan_RZ.stack.ccf(:,iper),'-r','linewidth',1.5);
             xlabel('RR');
             ylabel('RZ');
@@ -399,8 +417,10 @@ for ista1=1:nsta % loop over all stations
             title([sta2])
             set(gca,'linewidth',1.5,'fontsize',12)
 
+            close(fig_9999); % Close the figure
+            
             if isoutput
-                save2pdf([hv_fig_path,'/',sta1,'_',sta2,'_particle_motion.pdf'],9999,300);
+                save2pdf([hv_fig_path,'/',sta1,'_',sta2,'_particle_motion.pdf'],fig_9999,300);
             end
         end
         
