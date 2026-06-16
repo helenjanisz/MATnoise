@@ -18,7 +18,7 @@
 clear all; close all;
 setup_parameters;
 
-IsFigure = 0;
+IsFigure = 1;
 % On/off toggle for figure pop up
 showfigures = 0;
 isoverwrite = 1; % overwrite results?
@@ -130,6 +130,14 @@ for ista1=1:nsta % loop over all stations
         hv.sta1.RR_ZR_pos = amp_RR_pos ./ amp_ZR_pos;
         hv.sta2.ZR_ZZ_pos = amp_ZR_pos ./ amp_ZZ_pos;
         hv.sta2.RR_RZ_pos = amp_RR_pos ./ amp_RZ_pos;
+
+        size(ftan_ZZ.pos.ccf)
+        size(ftan_RZ.pos.ccf)
+
+        if ~isequal(size(ftan_ZZ.pos.ccf), size(ftan_RZ.pos.ccf))
+            disp(['Size mismatch for ',sta1,'-',sta2])
+            continue;
+        end
 
         % Get phase relationships
         % RZ/ZZ (multiply R by -1 because of coordinate convention: R points sta1-->sta2 by default)
