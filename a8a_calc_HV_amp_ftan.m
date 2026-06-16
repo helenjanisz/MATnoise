@@ -425,7 +425,6 @@ for ista1=1:nsta % loop over all stations
             title([sta2])
             set(gca,'linewidth',1.5,'fontsize',12)
 
-            close(fig_9999); % Close the figure
             
             if isoutput
                 save2pdf([hv_fig_path,'/',sta1,'_',sta2,'_particle_motion.pdf'],fig_9999,300);
