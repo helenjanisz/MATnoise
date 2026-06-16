@@ -430,6 +430,8 @@ for ista1=1:nsta % loop over all stations
             if isoutput
                 save2pdf([hv_fig_path,'/',sta1,'_',sta2,'_particle_motion.pdf'],fig_9999,300);
             end
+
+            close(fig_9999); % Close the figure
         end
         
     end
