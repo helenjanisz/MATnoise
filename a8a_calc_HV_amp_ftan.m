@@ -310,13 +310,13 @@ for ista1=1:nsta % loop over all stations
 
             subplot(2,1,1,'Parent', fig_9998);
             box on; hold on;
-            h9999(1) = plot(periods,hv.sta1.RZ_ZZ_pos,'-ob','DisplayName',[sta1,' RZ/ZZ +']);
+            plot(periods,hv.sta1.RZ_ZZ_pos,'-ob','DisplayName',[sta1,' RZ/ZZ +']);
             plot(periods,hv.sta1.RZ_ZZ_neg,':ob','DisplayName',[sta1,' RZ/ZZ -']);
             plot(periods,hv.sta1.RZ_ZZ_stack,'--ob','DisplayName',[sta1,' RZ/ZZ stack']);
             plot(periods,hv.sta1.RR_ZR_pos,'-oc','DisplayName',[sta1,' RR/ZR +']);
             plot(periods,hv.sta1.RR_ZR_neg,':oc','DisplayName',[sta1,' RR/ZR -']);
             plot(periods,hv.sta1.RR_ZR_stack,'--oc','DisplayName',[sta1,' RR/ZR stack']);
-            h9999(2) = plot(periods,hv.sta2.ZR_ZZ_pos,'-or','DisplayName',[sta2,' ZR/ZZ +']);
+            plot(periods,hv.sta2.ZR_ZZ_pos,'-or','DisplayName',[sta2,' ZR/ZZ +']);
             plot(periods,hv.sta2.ZR_ZZ_neg,':or','DisplayName',[sta2,' ZR/ZZ -']);
             plot(periods,hv.sta2.ZR_ZZ_stack,'--or','DisplayName',[sta2,' ZR/ZZ stack']);
             plot(periods,hv.sta2.RR_RZ_pos,'-om','DisplayName',[sta2,' RR/RZ +']);
@@ -331,13 +331,13 @@ for ista1=1:nsta % loop over all stations
 
             subplot(2,1,2,'Parent', fig_9998);
             box on; hold on;
-            h9999(1) = plot(periods,hv.sta1.dphi_RZ_ZZ_pos,'-ob','DisplayName',[sta1,' RZ/ZZ +']);
+            plot(periods,hv.sta1.dphi_RZ_ZZ_pos,'-ob','DisplayName',[sta1,' RZ/ZZ +']);
             plot(periods,hv.sta1.dphi_RZ_ZZ_neg,':ob','DisplayName',[sta1,' RZ/ZZ -']);
             plot(periods,hv.sta1.dphi_RZ_ZZ_stack,'--ob','DisplayName',[sta1,' RZ/ZZ stack']);
             plot(periods,hv.sta1.dphi_RR_ZR_pos,'-oc','DisplayName',[sta1,' RR/ZR +']);
             plot(periods,hv.sta1.dphi_RR_ZR_neg,':oc','DisplayName',[sta1,' RR/ZR -']);
             plot(periods,hv.sta1.dphi_RR_ZR_stack,'--oc','DisplayName',[sta1,' RR/ZR stack']);
-            h9999(2) = plot(periods,hv.sta2.dphi_ZR_ZZ_pos,'-or','DisplayName',[sta2,' ZR/ZZ +']);
+            plot(periods,hv.sta2.dphi_ZR_ZZ_pos,'-or','DisplayName',[sta2,' ZR/ZZ +']);
             plot(periods,hv.sta2.dphi_ZR_ZZ_neg,':or','DisplayName',[sta2,' ZR/ZZ -']);
             plot(periods,hv.sta2.dphi_ZR_ZZ_stack,'--or','DisplayName',[sta2,' ZR/ZZ stack']);
             plot(periods,hv.sta2.dphi_RR_RZ_pos,'-om','DisplayName',[sta2,' RR/RZ +']);
