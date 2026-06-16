@@ -308,7 +308,6 @@ for ista1=1:nsta % loop over all stations
         if IsFigure
             fig_9998=figure(figopstr{:}); clf;
             set(gcf,'position',[115   203   938   753],'color','w')
-
             subplot(2,1,1,'Parent', fig_9998);
             box on; hold on;
             plot(periods,hv.sta1.RZ_ZZ_pos,'-ob','DisplayName',[sta1,' RZ/ZZ +']);
