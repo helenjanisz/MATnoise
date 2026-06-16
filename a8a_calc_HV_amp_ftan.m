@@ -300,6 +300,7 @@ for ista1=1:nsta % loop over all stations
         end
         
         %% Plot station pair HV
+        h9999 = [];
         fig_9998 = [];
         if IsFigure
             fig_9998 = figure(figopstr{:}); % Create figure without displaying it    
