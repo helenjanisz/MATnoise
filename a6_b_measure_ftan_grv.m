@@ -105,7 +105,7 @@ for i=1:length(comp)
     end
 
     %------------ LOAD DATA AND PLOT IN TIME DOMAIN -------------%
-    for ista1=1:nsta % loop over all stations
+    for ista1=3:4 % loop over all stations
         sta1=char(stalist(ista1,:));
         sta1dir=[ccf_path,sta1]; % dir to have all cross terms about this central station
         

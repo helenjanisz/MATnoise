@@ -4,3 +4,5 @@
 *.pdf
 *.ps
 *.m~
+figs/*
+*.asv

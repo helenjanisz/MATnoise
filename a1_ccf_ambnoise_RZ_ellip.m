@@ -156,7 +156,7 @@ nsta=parameters.nsta; % number of target stations to calculate for
 %     [ b, a ] = get_filter_TFcoeffs( frange_FTN, dt );
 % end
 
-for ista1=1:3
+for ista1=1:nsta
 
     sta1=char(stalist(ista1,:));
     % Build station directories

@@ -91,7 +91,7 @@ for ista=1:nsta % loop over all stations
         tg_difffromZZ_vals = [tg_difffromZZ_vals; max([tg_RR_difffromZZ_stack(:)'; tg_RZ_difffromZZ_stack(:)'; tg_ZR_difffromZZ_stack(:)'])];
         hv_stas = [hv_stas; [sta1,'-',sta2]];
         r_vals = [r_vals; hv.stapairsinfo.r];
-        wl_vals = [wl_vals; hv.stapairsinfo.r./(hv.grv.ZZ_stack(:)'.*periods(:)')];
+        wl_vals = [wl_vals; hv.stapairsinfo.r./(hv.grv.ZZ_stack(:).*periods(:)')];
 %         snr_vals = [snr_vals; 0.25*(hv.snr.ZZ_stack + hv.snr.RR_stack + hv.snr.ZR_stack + hv.snr.RZ_stack)]; % average SNR
         snr_vals = [snr_vals; min([hv.snr.ZZ_stack; hv.snr.RR_stack; hv.snr.ZR_stack; hv.snr.RZ_stack])]; % minimum SNR
         dphi_vals = [dphi_vals; angmean(pi/180*[hv.sta1.dphi_RZ_ZZ_stack(:)'; hv.sta1.dphi_RR_ZR_stack(:)'])*180/pi];
@@ -117,7 +117,7 @@ for ista=1:nsta % loop over all stations
         tg_difffromZZ_vals = [tg_difffromZZ_vals; max([tg_RR_difffromZZ_stack(:)'; tg_RZ_difffromZZ_stack(:)'; tg_ZR_difffromZZ_stack(:)'])];
         hv_stas = [hv_stas; [sta1,'-',sta2]];
         r_vals = [r_vals; hv.stapairsinfo.r];
-        wl_vals = [wl_vals; hv.stapairsinfo.r./(hv.grv.ZZ_stack(:)'.*periods(:)')];
+        wl_vals = [wl_vals; hv.stapairsinfo.r./(hv.grv.ZZ_stack(:).*periods(:)')];
 %         snr_vals = [snr_vals; 0.25*(hv.snr.ZZ_stack + hv.snr.RR_stack + hv.snr.ZR_stack + hv.snr.RZ_stack)]; % average SNR
         snr_vals = [snr_vals; min([hv.snr.ZZ_stack; hv.snr.RR_stack; hv.snr.ZR_stack; hv.snr.RZ_stack])]; % minimum SNR
         dphi_vals = [dphi_vals; angmean(pi/180*[hv.sta2.dphi_ZR_ZZ_stack(:)'; hv.sta2.dphi_RR_RZ_stack(:)'])*180/pi];
@@ -128,6 +128,7 @@ for ista=1:nsta % loop over all stations
         continue
     end
     
+    % Problematic line 136 because repmat(periods,size(tg_difffromZZ_vals,1),1) is not square.
     %% Do quality control
     I_QCpass = snr_vals >= snr_thresh & ...
                wl_vals >= wl_thresh(1) & ...
