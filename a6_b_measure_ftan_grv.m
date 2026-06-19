@@ -58,6 +58,7 @@ opts.suppress_gain = 100; % (5)             % amount to subtract from Z along pi
 
 % dt = parameters.dt;
 stalist = parameters.stalist;
+stapairs = parameters.stapairs;
 nsta = parameters.nsta;
 winlength = parameters.winlength;
 figpath = parameters.figpath;
@@ -117,7 +118,16 @@ for i=1:length(comp)
             if(strcmp(sta1,sta2))
                 continue
             end
+
+            % Check if this pair is on the list
+            pairs = readtable(stapairs,'TextType','string');
+            pairExists = any(pairs.station_1 == sta1 & pairs.station_2 == sta2);
+                if ~pairExists
+                    disp(['Pair ',sta1,'-',sta2,' not in station_pairs.csv ... skipping']);
+                    continue;
+                end
             
+
             if ~isoverwrite
                 if exist(sprintf('%s/%s_%s_ftan.mat',ftan_out_path,sta1,sta2))
                     disp(['Already processed ',sta1,'-',sta2,' ... skipping']);
