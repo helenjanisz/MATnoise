@@ -9,8 +9,8 @@ addpath('./functions/calc_Rayleigh_disp/');
 %%% --- Paths to important files --- %%%
 parameters.workingdir = [pwd,'/'];
 
-parameters.datapath = ['/Users/noah/AACES_Data_09_10_2018/XO_sps25/XO/']; %'../nomelt_data_5sta/';
-
+parameters.datapath = ['/Users/noah/AACES_Data_09_10_2018/XO_sps25_test2/XO/']; %'../nomelt_data_5sta/';
+parameters.stapairs = '/Users/noah/Github/MATnoise/station_pairs.csv';
 parameters.PZpath = '../Instrument/'; % path to RESP files containing poles and zeros
 parameters.ccfpath = '/Users/noah/AACES_Data_09_10_2018/ccf_XO_sps25/';
 parameters.figpath = [parameters.workingdir,'figs/'];
