@@ -23,7 +23,7 @@
 clear;
 setup_parameters;
 
-IsFigure1 = 1;
+IsFigure1 = 0;
 IsFigure2 = 0;
 
 % OUTPUT SETTINGS
@@ -67,6 +67,7 @@ seis_path = parameters.seis_path;
 orientation_path = parameters.orientation_path;
 dt = parameters.dt;
 winlength = parameters.winlength;
+stapairs = parameters.stapairs;
 
 year = ''; %'2012';
 Nstart_sec = parameters.Nstart_sec; % (seconds) offset start of file
@@ -155,7 +156,7 @@ nsta=parameters.nsta; % number of target stations to calculate for
 %     [ b, a ] = get_filter_TFcoeffs( frange_FTN, dt );
 % end
 
-for ista1=1:nsta
+for ista1=1:3
 
     sta1=char(stalist(ista1,:));
     % Build station directories
@@ -212,6 +213,14 @@ for ista1=1:nsta
 
         list2= dir([datadir,sta2,'/*',comp,'Z.sac']);
 
+        % Check if this pair is on the list
+            pairs = readtable(stapairs,'TextType','string');
+            pairExists = any(pairs.station_1 == sta1 & pairs.station_2 == sta2);
+                if ~pairExists
+                    disp(['Pair ',sta1,'-',sta2,' not in station_pairs.csv ... skipping']);
+                    continue;
+                end
+                
         % check to see if we've already done this ccf
         if(exist([ccfR_path,sta1,'/',sta1,'_',sta2,'_f.mat']))
             display('CCF already exist, skip this pair');
