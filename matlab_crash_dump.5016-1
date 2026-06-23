@@ -1,0 +1,99 @@
+
+--------------------------------------------------------------------------------
+          Segmentation violation detected at 2026-06-19 13:13:51 -1000
+--------------------------------------------------------------------------------
+
+Configuration:
+  Crash Decoding           : Disabled - No sandbox or build area path
+  Crash Mode               : continue (default)
+  Default Encoding         : UTF-8
+  Deployed                 : false
+  Graphics Driver          : Uninitialized hardware 
+  Java Version             : Java 1.8.0_202-b08 with Oracle Corporation Java HotSpot(TM) 64-Bit Server VM mixed mode
+  MATLAB Architecture      : maci64
+  MATLAB Entitlement ID    : 4228887
+  MATLAB Root              : /Applications/MATLAB_R2023b.app
+  MATLAB Version           : 23.2.0.2485118 (R2023b) Update 6
+  OpenGL                   : hardware
+  Operating System         : Mac OS Version 14.2.1 (Build 23C71)
+  Process ID               : 5016
+  Processor ID             : x86 Family 6 Model 85 Stepping 7, GenuineIntel
+  Session Key              : b944c5ba-89cc-4b87-9ccf-339b08bb4d35
+  Window System            : Quartz
+
+Fault Count: 1
+
+
+Abnormal termination:
+Segmentation violation
+
+Current Thread: 'CrBrowserMain' id 0x7ff857002b80
+
+Register State (from fault):
+  RAX = 000000000000000a  RBX = 00007f9d4805a420
+  RCX = 0000000000000014  RDX = 00007ff7bdd3a9b0
+  RSP = 00007ff7bdd3a7c0  RBP = 00007ff7bdd3a880
+  RSI = 0000a9afd4b70790  RDI = 00007ff7bdd3a8a0
+
+   R8 = 0000000000000004   R9 = 000000000000010e
+  R10 = 0000000000000030  R11 = 000060001da0f360
+  R12 = 00007ff7bdd3a8a0  R13 = 000060001e1c4af0
+  R14 = 00007ff7bdd3a9b0  R15 = 0000a9afd4b70790
+
+  RIP = 0000000105016157  RFL = 0000000000010206
+
+   CS = 000000000000002b   FS = 0000000000000000   GS = 0000000000000000
+
+Stack Trace (from fault):
+[  0] 0x0000000102743184 /Applications/MATLAB_R2023b.app/bin/maci64/libmwfl.dylib+00008580 _ZN10foundation4core4diag15stacktrace_base7captureERKNS1_14thread_contextEm+00000052
+[  1] 0x0000000102746152 /Applications/MATLAB_R2023b.app/bin/maci64/libmwfl.dylib+00020818 _ZN10foundation4core4test17terminate_handledERKNSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE+00002210
+[  2] 0x0000000102745650 /Applications/MATLAB_R2023b.app/bin/maci64/libmwfl.dylib+00018000 _ZN10foundation4core4diag13terminate_logEPKcPK17__darwin_ucontext+00000128
+[  3] 0x0000000109b905cb /Applications/MATLAB_R2023b.app/bin/maci64/libmwmcr.dylib+00521675 _Z19mnPrintErrorMessageRKNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE+00011451
+[  4] 0x0000000109b8e5f6 /Applications/MATLAB_R2023b.app/bin/maci64/libmwmcr.dylib+00513526 _Z19mnPrintErrorMessageRKNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEE+00003302
+[  5] 0x0000000109b8c005 /Applications/MATLAB_R2023b.app/bin/maci64/libmwmcr.dylib+00503813 mnFatalSignalHandler+00000149
+[  6] 0x00007ff813a0f37d           /usr/lib/system/libsystem_platform.dylib+00013181 _sigtramp+00000029
+[  7] 0x0000000000000000                                   <unknown-module>+00000000
+[  8] 0x0000000105015846 /Applications/MATLAB_R2023b.app/bin/maci64/libmwmlutil.dylib+00419910 _ZN14cmddistributor18DefaultDistributor19makeRequestTrackingEN7mwboost10shared_ptrINS_10CmdRequestEEEONSt3__110unique_ptrINS_15PromiseDelegateENS5_14default_deleteIS7_EEEERKNS_10RunOptionsERKN10foundation7msg_svc8exchange6IDTypeEbONS5_8functionIFvvEEE+00000966
+[  9] 0x000000010d6233de /Applications/MATLAB_R2023b.app/bin/maci64/libmwuix.dylib+00160734 _Z16handleCallMATLABNSt3__112basic_stringIDsNS_11char_traitsIDsEENS_9allocatorIDsEEEE+00001134
+[ 10] 0x000000010d623b6b /Applications/MATLAB_R2023b.app/bin/maci64/libmwuix.dylib+00162667 _Z10handleQuitv+00000043
+[ 11] 0x000000010d6216d9 /Applications/MATLAB_R2023b.app/bin/maci64/libmwuix.dylib+00153305 _Z23MacSetMcrGetAppNameProcPFNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEvE+00000473
+[ 12] 0x00007ff814a2ac7e /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation+00203902 -[NSAppleEventManager dispatchRawAppleEvent:withRawReply:handlerRefCon:]+00000308
+[ 13] 0x00007ff814a2aa91 /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation+00203409 _NSAppleEventManagerGenericHandler+00000080
+[ 14] 0x00007ff81ab1da4e /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE+00047694 _AppleEventsCheckInAppWithBlock+00013407
+[ 15] 0x00007ff81ab1d29c /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE+00045724 _AppleEventsCheckInAppWithBlock+00011437
+[ 16] 0x00007ff81ab16bf1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE+00019441 aeProcessAppleEvent+00000409
+[ 17] 0x00007ff81e3a3664 /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/HIToolbox+00263780 AEProcessAppleEvent+00000055
+[ 18] 0x00007ff8170c9ae2 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00256738 _DPSNextEvent+00001689
+[ 19] 0x00007ff8179c1f64 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+09662308 -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]+00001304
+[ 20] 0x00007ff8170bad32 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00195890 -[NSApplication run]+00000603
+[ 21] 0x000000010d622119 /Applications/MATLAB_R2023b.app/bin/maci64/libmwuix.dylib+00155929 _Z23MacSetMcrGetAppNameProcPFNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEEvE+00003097
+[ 22] 0x00007ff813ab25b0 /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation+00464304 __CFNOTIFICATIONCENTER_IS_CALLING_OUT_TO_AN_OBSERVER__+00000137
+[ 23] 0x00007ff813b43116 /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation+01057046 ___CFXRegistrationPost_block_invoke+00000088
+[ 24] 0x00007ff813b43060 /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation+01056864 _CFXRegistrationPost+00000532
+[ 25] 0x00007ff813a824ab /System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation+00267435 _CFXNotificationPost+00000682
+[ 26] 0x00007ff814a0215e /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation+00037214 -[NSNotificationCenter postNotificationName:object:userInfo:]+00000082
+[ 27] 0x00007ff8170d1f6e /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00290670 -[NSApplication _postDidFinishNotification]+00000311
+[ 28] 0x00007ff8170d1cb6 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00289974 -[NSApplication _sendFinishLaunchingNotification]+00000215
+[ 29] 0x00007ff8170cfd60 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00281952 -[NSApplication(NSAppleEventHandling) _handleAEOpenEvent:]+00000542
+[ 30] 0x00007ff8170cf9b3 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00281011 -[NSApplication(NSAppleEventHandling) _handleCoreEvent:withReplyEvent:]+00000679
+[ 31] 0x00007ff814a2ac7e /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation+00203902 -[NSAppleEventManager dispatchRawAppleEvent:withRawReply:handlerRefCon:]+00000308
+[ 32] 0x00007ff814a2aa91 /System/Library/Frameworks/Foundation.framework/Versions/C/Foundation+00203409 _NSAppleEventManagerGenericHandler+00000080
+[ 33] 0x00007ff81ab1da4e /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE+00047694 _AppleEventsCheckInAppWithBlock+00013407
+[ 34] 0x00007ff81ab1d29c /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE+00045724 _AppleEventsCheckInAppWithBlock+00011437
+[ 35] 0x00007ff81ab16bf1 /System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/AE.framework/Versions/A/AE+00019441 aeProcessAppleEvent+00000409
+[ 36] 0x00007ff81e3a3664 /System/Library/Frameworks/Carbon.framework/Versions/A/Frameworks/HIToolbox.framework/Versions/A/HIToolbox+00263780 AEProcessAppleEvent+00000055
+[ 37] 0x00007ff8170c9ae2 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00256738 _DPSNextEvent+00001689
+[ 38] 0x00007ff8179c1f64 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+09662308 -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:]+00001304
+[ 39] 0x00007ff8170bad32 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00195890 -[NSApplication run]+00000603
+[ 40] 0x00007ff81708ed41 /System/Library/Frameworks/AppKit.framework/Versions/C/AppKit+00015681 NSApplicationMain+00000816
+[ 41] 0x000000010d6225c5 /Applications/MATLAB_R2023b.app/bin/maci64/libmwuix.dylib+00157125 _Z21MacRunApplicationMainb+00000085
+[ 42] 0x0000000109b96d37 /Applications/MATLAB_R2023b.app/bin/maci64/libmwmcr.dylib+00548151 _ZN3mcr7runtime9uix_proxy21MacRunApplicationMainEb+00000103
+[ 43] 0x0000000109b3e8be /Applications/MATLAB_R2023b.app/bin/maci64/libmwmcr.dylib+00186558 _ZN3mcr7runtime10MainThread7runMainERKN7mwboost9function0IiEEbb+00000318
+[ 44] 0x0000000109b3e578 /Applications/MATLAB_R2023b.app/bin/maci64/libmwmcr.dylib+00185720 _Z12mcr_run_mainRKN7mwboost9function0IiEEbb+00000104
+[ 45] 0x0000000108618df4 /Applications/MATLAB_R2023b.app/bin/maci64/libmwMVMLocal.dylib+00171508 _ZN10mvm_server12terminateFcnEv+00016404
+[ 46] 0x0000000102d44e33 /Applications/MATLAB_R2023b.app/bin/maci64/libmwmvm.dylib+00814643 _ZN3mvm6detail11SessionImpl7runMainERKN7mwboost9function1IiRKNSt3__16vectorINS4_12basic_stringIDsNS4_11char_traitsIDsEENS4_9allocatorIDsEEEENS9_ISB_EEEEEESF_+00000163
+[ 47] 0x0000000102d45413 /Applications/MATLAB_R2023b.app/bin/maci64/libmwmvm.dylib+00816147 _ZN3mvm6detail11SessionImpl16runMatlabDesktopEv+00000531
+[ 48] 0x0000000102cb9af5 /Applications/MATLAB_R2023b.app/bin/maci64/libmwmvm.dylib+00244469 _ZN3mvm14ProcessSession16runMatlabDesktopEv+00000117
+[ 49] 0x00000001021c52c3 /Applications/MATLAB_R2023b.app/Contents/MacOS/MATLAB+00012995 main+00002403
+[ 50] 0x00007ff813656386                                      /usr/lib/dyld+00025478 start+00001942
+
