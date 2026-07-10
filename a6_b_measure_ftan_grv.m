@@ -10,15 +10,15 @@
 % jbrussell - 9/2025
 clear all; close all;
 setup_parameters;
-IsFigure = 1;
-IsFigure_GAUS = 1; % Plot frequency domain filtered and unfiltered
-IsFigure_env = 1; % Plot time domain filtered and unfiltered CCFs with envelopes
-IsFigure4=1; % Plot correlation coefficients between grv curves
-IsFigure3 = 1; % Plot grv curves on top of ccf envelopes
+IsFigure = 0;
+IsFigure_GAUS = 0; % Plot frequency domain filtered and unfiltered
+IsFigure_env = 0; % Plot time domain filtered and unfiltered CCFs with envelopes
+IsFigure4=0; % Plot correlation coefficients between grv curves
+IsFigure3 = 0; % Plot grv curves on top of ccf envelopes
 % On/off toggle for figure pop up
 showfigures = 0;
 
-isoverwrite = 1; % overwrite results?
+isoverwrite = 0; % overwrite results?
 isoutput = 1; % save output?
 
 %======================= PARAMETERS =======================%
@@ -105,7 +105,7 @@ for i=1:length(comp)
     end
 
     %------------ LOAD DATA AND PLOT IN TIME DOMAIN -------------%
-    for ista1=3:4 % loop over all stations
+    for ista1=1:nsta % loop over all stations
         sta1=char(stalist(ista1,:));
         sta1dir=[ccf_path,sta1]; % dir to have all cross terms about this central station
         
@@ -202,7 +202,7 @@ for i=1:length(comp)
 
                 % Save and close figure
                 if isoutput
-                    save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_gaussian_filters.pdf'],fig_gaus,300);
+                    print(fig_gaus,'-dpng',[ftan_fig_path,'/',sta1,'_',sta2,'_gaussian_filters.png']);
                 end
                 close(fig_gaus); % Close the figure
                 
@@ -246,7 +246,7 @@ for i=1:length(comp)
                 title(['Gaussian filtered CCFs: ',sta1,'-',sta2]);
                 xlabel('Lag Time (s)');
     %             ylabel('Normalized & Shifted Amplitudes');
-                save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_time_domain_ccf.pdf'],fig_env,300);
+                print(fig_env,'-dpng',[ftan_fig_path,'/',sta1,'_',sta2,'_time_domain_ccf.png']);
                 close(fig_env); % Close the figure
             end
             
@@ -317,7 +317,7 @@ for i=1:length(comp)
                 end
                 sgtitle('Dispersion Curve Correlations','fontsize',16,'fontweight','bold');
                 if isoutput
-                save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_correlations.pdf'],4,300);
+                print(4,'-dpng',[ftan_fig_path,'/',sta1,'_',sta2,'_correlations.png']);
                 
                 close(fig_4); % Close the figure
                 end
@@ -403,7 +403,7 @@ for i=1:length(comp)
                 title(['Stacked ',sta1,'-',sta2,': ',num2str(r),'km']);
                 
                 if isoutput
-                    save2pdf([ftan_fig_path,'/',sta1,'_',sta2,'_grv_panels.pdf'],f3,300);
+                    print(f3,'-dpng',[ftan_fig_path,'/',sta1,'_',sta2,'_grv_panels.png']);
                 end
                 
                 close(fig_3); % Close the figure
@@ -466,8 +466,9 @@ for i=1:length(comp)
                 
                 save(sprintf('%s/%s_%s_ftan.mat',ftan_out_path,sta1,sta2),'ftan');
             end
-
             
-        end % ista2
+        end % ista2 
+        cleanLargeVars(10e6)
+        disp('Large Variables Cleared')
     end % ista1
 end % component
