@@ -36,13 +36,13 @@ fig_winlength_path = [figpath,windir,'/fullStack/'];
 %% Setup directories
 
 HV_in_path = ['./HV_ellip/',windir,'/fullStack/',num2str(1/frange_fit(2)),'_',num2str(1/frange_fit(1)),'s_br',num2str(opts.nBranches),'/'];
-HV_out_path = ['./HV_ellip_stats/',windir,'/fullStack/',num2str(1/frange_fit(2)),'_',num2str(1/frange_fit(1)),'s_br',num2str(opts.nBranches),'/'];
+HV_out_path = ['./HV_ellip_stats/',windir,'/fullStack/',num2str(1/frange_fit(2)),'_',num2str(1/frange_fit(1)),'s_br',num2str(opts.nBranches),'/branch1/'];
 if ~exist(HV_out_path)
     mkdir(HV_out_path)
 end
 
 % figure output path
-hv_fig_path = ['./figs/',windir,'/fullStack/HV_ellip_stats/',num2str(1/frange_fit(2)),'_',num2str(1/frange_fit(1)),'s_br',num2str(opts.nBranches),'/'];
+hv_fig_path = ['./figs/',windir,'/fullStack/HV_ellip_stats/',num2str(1/frange_fit(2)),'_',num2str(1/frange_fit(1)),'s_br',num2str(opts.nBranches),'/branch1/'];
 if ~exist(hv_fig_path)
     mkdir(hv_fig_path);
 end
