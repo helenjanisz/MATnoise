@@ -2,6 +2,8 @@
 % determine station averages. Must first run a8a_calc_HV_amp_ftan.
 %
 % jbrussell - 10/2025
+
+% Currently set up to do 1 branch at a time. Starts off with branch 1. Manually change the commented sections. NJ
 clear all; close all;
 setup_parameters;
 addpath('./ray_tomo/tomo_functions/')
